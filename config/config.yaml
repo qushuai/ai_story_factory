@@ -1,0 +1,21 @@
+ai:
+  api_url: https://api.deepseek.com/chat/completions
+  api_key: sk-250f8b3b330b464db8146218323c6954
+  model: deepseek-chat
+  temperature: 0.8
+  max_tokens: 1500
+
+story:
+  duration_minutes: 3
+paths:
+  assets_dir: ./assets
+  sfx_dir: ./assets/sfx
+  bgm_dir: ./assets/bgm
+  tts_placeholder_dir: ./assets/tts_placeholder
+
+database:
+  path: ./db/audio_library.db
+
+audio:
+  sfx_duration: 2000
+  tts_placeholder_duration: 3000

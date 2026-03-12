@@ -1,0 +1,211 @@
+[
+  {
+    "index": 0,
+    "type": "dialogue",
+    "speaker": "narrator",
+    "text": "[BGM:dark_ambience]",
+    "file": "./assets/tts_placeholder/0_narrator.wav",
+    "duration": 3000
+  },
+  {
+    "index": 1,
+    "type": "pause",
+    "duration": 800
+  },
+  {
+    "index": 2,
+    "type": "sfx",
+    "sfx_name": "door",
+    "file": "./assets/sfx/mixkit-hard-horror-hit-drum-565.wav"
+  },
+  {
+    "index": 3,
+    "type": "pause",
+    "duration": 500
+  },
+  {
+    "index": 4,
+    "type": "sfx",
+    "sfx_name": "whisper",
+    "file": "./assets/sfx/mixkit-creepy-little-creature-2873.wav"
+  },
+  {
+    "index": 5,
+    "type": "pause",
+    "duration": 1000
+  },
+  {
+    "index": 6,
+    "type": "sfx",
+    "sfx_name": "heartbeat",
+    "file": "./assets/sfx/mixkit-cinematic-horror-heartbeat-transition-489.wav"
+  },
+  {
+    "index": 7,
+    "type": "sfx",
+    "sfx_name": "footstep",
+    "file": "./assets/sfx/mixkit-game-blood-pop-slide-2363.wav"
+  },
+  {
+    "index": 8,
+    "type": "pause",
+    "duration": 700
+  },
+  {
+    "index": 9,
+    "type": "sfx",
+    "sfx_name": "whisper",
+    "file": "./assets/sfx/mixkit-creepy-little-creature-2873.wav"
+  },
+  {
+    "index": 10,
+    "type": "dialogue",
+    "speaker": "narrator",
+    "text": "[BGM:dark_ambience intensify]",
+    "file": "./assets/tts_placeholder/10_narrator.wav",
+    "duration": 3000
+  },
+  {
+    "index": 11,
+    "type": "pause",
+    "duration": 600
+  },
+  {
+    "index": 12,
+    "type": "pause",
+    "duration": 400
+  },
+  {
+    "index": 13,
+    "type": "pause",
+    "duration": 1000
+  },
+  {
+    "index": 14,
+    "type": "pause",
+    "duration": 800
+  },
+  {
+    "index": 15,
+    "type": "dialogue",
+    "speaker": "narrator",
+    "text": "[BGM:dark_ambience swell]",
+    "file": "./assets/tts_placeholder/15_narrator.wav",
+    "duration": 3000
+  },
+  {
+    "index": 16,
+    "type": "pause",
+    "duration": 500
+  },
+  {
+    "index": 17,
+    "type": "pause",
+    "duration": 600
+  },
+  {
+    "index": 18,
+    "type": "pause",
+    "duration": 400
+  },
+  {
+    "index": 19,
+    "type": "dialogue",
+    "speaker": "narrator",
+    "text": "[BGM:dark_ambience oppressive]",
+    "file": "./assets/tts_placeholder/19_narrator.wav",
+    "duration": 3000
+  },
+  {
+    "index": 20,
+    "type": "pause",
+    "duration": 700
+  },
+  {
+    "index": 21,
+    "type": "pause",
+    "duration": 500
+  },
+  {
+    "index": 22,
+    "type": "pause",
+    "duration": 800
+  },
+  {
+    "index": 23,
+    "type": "pause",
+    "duration": 400
+  },
+  {
+    "index": 24,
+    "type": "pause",
+    "duration": 1000
+  },
+  {
+    "index": 25,
+    "type": "pause",
+    "duration": 600
+  },
+  {
+    "index": 26,
+    "type": "pause",
+    "duration": 500
+  },
+  {
+    "index": 27,
+    "type": "dialogue",
+    "speaker": "narrator",
+    "text": "[BGM:dark_ambience reaches peak]",
+    "file": "./assets/tts_placeholder/27_narrator.wav",
+    "duration": 3000
+  },
+  {
+    "index": 28,
+    "type": "pause",
+    "duration": 800
+  },
+  {
+    "index": 29,
+    "type": "pause",
+    "duration": 1000
+  },
+  {
+    "index": 30,
+    "type": "pause",
+    "duration": 600
+  },
+  {
+    "index": 31,
+    "type": "pause",
+    "duration": 700
+  },
+  {
+    "index": 32,
+    "type": "pause",
+    "duration": 500
+  },
+  {
+    "index": 33,
+    "type": "sfx",
+    "sfx_name": "door",
+    "file": "./assets/sfx/mixkit-hard-horror-hit-drum-565.wav"
+  },
+  {
+    "index": 34,
+    "type": "pause",
+    "duration": 400
+  },
+  {
+    "index": 35,
+    "type": "dialogue",
+    "speaker": "ghost",
+    "text": "[BGM:dark_ambience fade to silence]",
+    "file": "./assets/tts_placeholder/35_ghost.wav",
+    "duration": 3000
+  },
+  {
+    "index": 36,
+    "type": "pause",
+    "duration": 1000
+  }
+]

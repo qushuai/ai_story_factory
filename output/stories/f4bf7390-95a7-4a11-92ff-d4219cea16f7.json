@@ -1,0 +1,439 @@
+{
+  "story_id": "f4bf7390-95a7-4a11-92ff-d4219cea16f7",
+  "segments": [
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "rain",
+      "duration": null
+    },
+    {
+      "type": "dialogue",
+      "speaker": "narrator",
+      "text": "[BGM:dark_ambience]",
+      "name": null,
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 800
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "door",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 500
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "whisper",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 1000
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "heartbeat",
+      "duration": null
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "footstep",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 700
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "whisper",
+      "duration": null
+    },
+    {
+      "type": "dialogue",
+      "speaker": "narrator",
+      "text": "[BGM:dark_ambience intensify]",
+      "name": null,
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 600
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "creaking_wood",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 400
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "door_squeak",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 1000
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "wooden_blocks",
+      "duration": null
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "heartbeat faster",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 800
+    },
+    {
+      "type": "dialogue",
+      "speaker": "narrator",
+      "text": "[BGM:dark_ambience swell]",
+      "name": null,
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 500
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "footstep approaching",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 600
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "whisper_close",
+      "duration": null
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "door_slam",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 400
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "heartbeat pounding",
+      "duration": null
+    },
+    {
+      "type": "dialogue",
+      "speaker": "narrator",
+      "text": "[BGM:dark_ambience oppressive]",
+      "name": null,
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 700
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "child_giggle",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 500
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "photo_crackle",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 800
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "wind_howl_inside",
+      "duration": null
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "light_fixture_rattling",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 400
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 1000
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "footstep_sudden",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 600
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "heartbeat stops",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 500
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "heartbeat resumes, erratic",
+      "duration": null
+    },
+    {
+      "type": "dialogue",
+      "speaker": "narrator",
+      "text": "[BGM:dark_ambience reaches peak]",
+      "name": null,
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 800
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "car_crash",
+      "duration": null
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "glass_shatter",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 1000
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "whisper_multiple",
+      "duration": null
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "dripping",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 600
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "darkness_creep",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 700
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "heartbeat slows",
+      "duration": null
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "lullaby_twisted",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 500
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "door",
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 400
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "child_giggle_fade",
+      "duration": null
+    },
+    {
+      "type": "dialogue",
+      "speaker": "ghost",
+      "text": "[BGM:dark_ambience fade to silence]",
+      "name": null,
+      "duration": null
+    },
+    {
+      "type": "pause",
+      "speaker": null,
+      "text": null,
+      "name": null,
+      "duration": 1000
+    },
+    {
+      "type": "sfx",
+      "speaker": null,
+      "text": null,
+      "name": "rain_fade_out",
+      "duration": null
+    }
+  ]
+}
