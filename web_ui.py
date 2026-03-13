@@ -26,7 +26,7 @@ def generate(story: str = Form(...)):
 
     os.makedirs("stories", exist_ok=True)
 
-    story_path = f"stories/{story_id}.txt"
+    story_path = f"output/stories/{story_id}.txt"
 
     with open(story_path, "w", encoding="utf-8") as f:
         f.write(story)
