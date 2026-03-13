@@ -1,0 +1,74 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+venv/
+.venv/
+env/
+ENV/
+
+# pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mac
+.DS_Store
+
+# -----------------------
+# Build
+# -----------------------
+
+build/
+dist/
+*.egg-info/
+
+# -----------------------
+# Logs
+# -----------------------
+
+*.log
+
+# -----------------------
+# Output / Generated Files
+# -----------------------
+
+output/
+assets/tts_placeholder/
+
+# -----------------------
+# Models / AI Weights
+# -----------------------
+
+models/
+checkpoints/
+*.pt
+*.pth
+*.safetensors
+
+# -----------------------
+# Temporary
+# -----------------------
+
+tmp/
+temp/
+cache/
+
+# -----------------------
+# Environment variables
+# -----------------------
+
+.env
+.env.local
+.env.*
+
+# -----------------------
+# Jupyter
+# -----------------------
+
+.ipynb_checkpoints/
