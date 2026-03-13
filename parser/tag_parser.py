@@ -54,5 +54,5 @@ class TagParser:
                     text=line
                 )
             )
-
+        
         return segments
