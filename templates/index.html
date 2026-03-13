@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AI Horror Studio</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:40px;
+}
+
+textarea{
+width:800px;
+height:300px;
+}
+
+#logs{
+width:800px;
+height:250px;
+background:#111;
+color:#0f0;
+overflow:auto;
+padding:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>AI Horror Story Factory</h2>
+
+<textarea id="story"></textarea>
+
+<br><br>
+
+<button onclick="generate()">生成音频</button>
+
+<h3>任务日志</h3>
+
+<pre id="logs"></pre>
+
+<script>
+
+function generate(){
+
+let story = document.getElementById("story").value
+
+fetch("/generate",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded"
+},
+body:"story="+encodeURIComponent(story)
+})
+
+startLogs()
+
+}
+
+function startLogs(){
+
+let logBox=document.getElementById("logs")
+
+setInterval(()=>{
+
+fetch("/logs")
+.then(res=>res.text())
+.then(data=>{
+logBox.textContent=data
+logBox.scrollTop=logBox.scrollHeight
+})
+
+},1000)
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -10,16 +10,17 @@ class StoryRepository:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-    def save(self, segments, file_path=None):
+    def save(self, title, segments, file_path=None):
 
         story_id = str(uuid.uuid4())
 
         data = {
             "story_id": story_id,
+            "title": title,
             "segments": [seg.__dict__ for seg in segments]
         }
 
-        # 如果外部指定了路径
+        # 如果外部指定路径
         if file_path:
             file_path = Path(file_path)
             file_path.parent.mkdir(parents=True, exist_ok=True)
