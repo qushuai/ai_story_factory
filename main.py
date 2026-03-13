@@ -1,4 +1,8 @@
+import os
+import uuid
 import yaml
+import json
+import sys
 
 from story_engine.story_generator import StoryGenerator
 from story_engine.prompt_manager import PromptManager
@@ -9,61 +13,109 @@ from storage.audio_plan_repository import save_audio_plan
 
 from engine.audio_plan_builder import build_audio_plan
 from engine.audio_mixer import mix_audio
+from engine.timeline_engine import build_timeline
 
+
+# ------------------------
+# 读取配置
+# ------------------------
 def load_config():
-
     with open("config/config.yaml", "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
+# ------------------------
+# 创建任务目录
+# ------------------------
+def create_task_dir():
+
+    task_id = str(uuid.uuid4())[:8]
+
+    task_dir = os.path.join("output", "tasks", task_id)
+
+    os.makedirs(task_dir, exist_ok=True)
+    os.makedirs(os.path.join(task_dir, "story"), exist_ok=True)
+    os.makedirs(os.path.join(task_dir, "audio_plan"), exist_ok=True)
+    os.makedirs(os.path.join(task_dir, "audio"), exist_ok=True)
+    os.makedirs(os.path.join(task_dir, "subtitle"), exist_ok=True)
+    os.makedirs(os.path.join(task_dir, "timeline"), exist_ok=True)
+
+    return task_id, task_dir
+
+
+# ------------------------
+# 主流程
+# ------------------------
 def main():
 
-    print("AI Horror Story Factory")
-
-    # ------------------------
-    # 1 读取配置
-    # ------------------------
+    print("AI Horror Story Factory\n")
 
     config = load_config()
 
+    task_id, task_dir = create_task_dir()
+
+    print("Task ID:", task_id)
+    print("Task Dir:", task_dir)
+    print()
+
+    story_file = os.path.join(task_dir, "story", "story.json")
+    audio_plan_file = os.path.join(task_dir, "audio_plan", "audio_plan.json")
+    timeline_file = os.path.join(task_dir, "timeline", "timeline.json")
+
     # ------------------------
-    # 2 生成故事
+    # 1 判断是否有外部故事
     # ------------------------
 
-    generator = StoryGenerator(config)
+    if len(sys.argv) > 1:
 
-    prompt = PromptManager.build_prompt()
+        story_path = sys.argv[1]
 
-    print("Generating story...")
+        print("Using external story file:")
+        print(story_path)
 
-    story_text = generator.generate(prompt)
+        with open(story_path, "r", encoding="utf-8") as f:
+            story_text = f.read()
 
-    print("Story generated")
+    else:
 
+        print("Generating story with AI...")
+
+        generator = StoryGenerator(config)
+
+        prompt = PromptManager.build_prompt()
+
+        story_text = generator.generate(prompt)
+
+    print("\nStory text:\n")
     print(story_text)
+    print()
 
     # ------------------------
-    # 3 解析标签
+    # 2 解析标签
     # ------------------------
 
     parser = TagParser()
 
-    segments = parser.parse(story_text)
+    title, segments = parser.parse(story_text)
+
+    print("Parsed segments:")
+    print(segments)
+    print()
 
     # ------------------------
-    # 4 保存 story.json
+    # 3 保存 Story JSON
     # ------------------------
 
     repo = StoryRepository()
 
-    story_path = repo.save(segments)
+    story_path = repo.save(title, segments, story_file)
 
     print("Story JSON saved:")
-
     print(story_path)
+    print()
 
     # ------------------------
-    # 5 生成 Audio Plan
+    # 4 生成 Audio Plan
     # ------------------------
 
     print("Building audio plan...")
@@ -74,19 +126,53 @@ def main():
 
     audio_plan = build_audio_plan(story_data)
 
-    audio_plan_path = save_audio_plan(audio_plan)
+    audio_plan_path = save_audio_plan(audio_plan, audio_plan_file)
 
     print("Audio plan saved:")
-
     print(audio_plan_path)
-    
+    print()
+
+    # ------------------------
+    # 5 构建 Timeline
+    # ------------------------
+
+    print("Building timeline...")
+
+    timeline = build_timeline(story_path, audio_plan_path)
+
+    with open(timeline_file, "w", encoding="utf-8") as f:
+        json.dump(timeline, f, indent=2, ensure_ascii=False)
+
+    print("Timeline saved:")
+    print(timeline_file)
+    print()
+
+    # ------------------------
+    # 6 混音
+    # ------------------------
+
     print("Mixing audio...")
 
-    final_audio = mix_audio(audio_plan_path)
+    final_audio, subtitle_file = mix_audio(
+        story_path,
+        audio_plan_path,
+        task_dir
+    )
 
-    print("Audio file:")
-
+    print("\nAudio generated:")
     print(final_audio)
 
+    print("\nSubtitle generated:")
+    print(subtitle_file)
+
+    print("\nTask completed!")
+
+    print("\nAll outputs in:")
+    print(task_dir)
+
+
+# ------------------------
+# 程序入口
+# ------------------------
 if __name__ == "__main__":
     main()

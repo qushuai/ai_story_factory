@@ -2,27 +2,74 @@ class PromptManager:
 
     @staticmethod
     def build_prompt():
+
         prompt = """
-你是一个专业的恐怖故事作家，请生成一个悬疑恐怖故事。要求如下：
+你是一名专业的恐怖小说作者。
 
-1. 故事对白用中文撰写。
-2. 使用固定角色：旁白(narrator)、孩子(child)、幽灵(ghost)。
-3. 使用音效(SFX)和背景音乐(BGM)来增强氛围。
-4. 使用停顿(PAUSE:毫秒)表示故事中需要停顿的时间。
-5. SFX/BGM 标签必须保留原始标识，如 door、footstep、heartbeat、whisper、dark_ambience。
-6. 输出格式示例：
+请写一个 **原创中文恐怖故事**。
+必须包含两个部分：
+[TITLE]
+生成一个吸引人的短视频标题
+不超过20字
+具有悬疑感
+[STORY]
+写一个中文恐怖故事。
+必须使用以下结构化标签。
 
-[SPEAKER:narrator] 老宅的挂钟停在午夜。
-[SFX:door] 门自己开了。
-[PAUSE:600]
-[SPEAKER:child] 妈妈，地下室有人。
+角色标签：
+
+[SPEAKER:narrator]
+[SPEAKER:ghost]
+[SPEAKER:child]
+
+音效标签：
+
+[SFX:door]
 [SFX:footstep]
-[SPEAKER:narrator] 可她的孩子三年前就死了。
-[PAUSE:600]
-[SPEAKER:ghost] 妈妈，我好冷……
-[BGM:dark_ambience]
-[SFX:heartbeat] 心跳声急促而疼痛。
+[SFX:heartbeat]
+[SFX:whisper]
 
-请生成大约 30-50 段故事，合理交替对白、音效和停顿。
+停顿标签：
+
+[PAUSE:600]
+
+规则：
+
+1 故事必须使用中文
+2 每一句话前必须有 SPEAKER 标签
+3 每句话不超过20字
+4 每句话单独一行
+5 合理插入 SFX
+6 使用 PAUSE 制造紧张节奏
+7 故事长度约 4-5 分钟
+8 故事必须是 **原创场景**
+9 故事必须包含 120-150行对白
+禁止出现以下常见套路：
+
+- 老宅
+- 深夜三点
+- 停止的钟
+- 走廊脚步声
+- 门慢慢打开
+
+请创造 **新的恐怖场景**，【随机场景池（必须随机选择一个）】
+
+地下停车场
+废弃游泳馆
+旧录像带
+山区加油站
+无人值守便利店
+电梯故障楼
+自动洗车机
+封闭高速服务区
+废弃游乐场
+医院太平间电梯
+停运缆车站
+荒废地铁维修通道
+深山信号塔
+海边灯塔控制室
+
+故事必须 **直接开始正文**，不要解释规则。
 """
+
         return prompt
