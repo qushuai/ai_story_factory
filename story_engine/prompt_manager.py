@@ -18,10 +18,10 @@ class PromptManager:
 
 角色标签：
 
-[SPEAKER:narrator]
+[SPEAKER:male]
 [SPEAKER:ghost]
-[SPEAKER:child]
-
+[SPEAKER:female]
+旁白使用[SPEAKER:female]
 音效标签：
 
 [SFX:door]
@@ -35,15 +35,15 @@ class PromptManager:
 
 规则：
 
-1 故事必须使用中文
+1 故事必须使用英文
 2 每一句话前必须有 SPEAKER 标签
 3 每句话不超过20字
 4 每句话单独一行
 5 合理插入 SFX
 6 使用 PAUSE 制造紧张节奏
-7 故事长度约 4-5 分钟
+7 故事长度约 1-2分钟
 8 故事必须是 **原创场景**
-9 故事必须包含 120-150行对白
+9 故事必须包含 12-20行对白
 禁止出现以下常见套路：
 
 - 老宅
@@ -69,7 +69,7 @@ class PromptManager:
 深山信号塔
 海边灯塔控制室
 
-故事必须 **直接开始正文**，不要解释规则。
+故事必须 **直接开始正文**，不要解释规则。英文回复
 """
 
         return prompt

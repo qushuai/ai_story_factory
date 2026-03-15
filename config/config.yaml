@@ -19,3 +19,10 @@ database:
 audio:
   sfx_duration: 2000
   tts_placeholder_duration: 3000
+  # config.yaml (部分配置)
+fish_speech:
+  api_url: "http://127.0.0.1:9880/v1/tts"
+  api_key: "your_api_key"
+  model: "narrator"  # 默认语音模型
+  voice_speed: 1.0  # 语速
+  voice_pitch: 1.0  # 语调
