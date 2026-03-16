@@ -1,0 +1,58 @@
+[
+  {
+    "type": "bgm",
+    "file": "assets/bgm/low_hum.wav"
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/ambient/wind.wav"
+  },
+  {
+    "type": "dialogue",
+    "duration": 5000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/heartbeat/heartbeat_slow.wav"
+  },
+  {
+    "type": "dialogue",
+    "duration": 4000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/door/door_creak_long.wav"
+  },
+  {
+    "type": "dialogue",
+    "duration": 3000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/footstep/footstep_wood_far.wav"
+  },
+  {
+    "type": "dialogue",
+    "duration": 3000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/heartbeat/heartbeat_fast.wav"
+  },
+  {
+    "type": "dialogue",
+    "duration": 2000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/jump/scream_female.wav"
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/metal/metal_scrape.wav"
+  },
+  {
+    "type": "bgm",
+    "file": "assets/bgm/lingering_ambient.wav"
+  }
+]

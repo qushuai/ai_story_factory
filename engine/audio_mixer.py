@@ -10,7 +10,7 @@ from pathlib import Path
 from pydub import AudioSegment
 from pydub.generators import Sine
 from typing import Optional, Dict, List, Tuple, Union
-
+from .cover_generator import CoverGenerator
 
 class TTSCache:
     """TTS 文件缓存管理器 - 负责生成、缓存和清理临时文件"""
@@ -121,6 +121,8 @@ class AudioMixer:
         self.api_url = api_url
         self.cache = TTSCache(cache_dir, cache_hours)
         self.default_speaker = default_speaker
+        # 初始化封面生成器
+        self.cover_generator = CoverGenerator(assets_dir="assets")
         
         # 临时目录管理
         self._temp_dir = temp_dir
@@ -281,7 +283,26 @@ class AudioMixer:
         except Exception as e:
             print(f"❌ API请求异常: {str(e)}")
             return False, None, None
-    
+    def generate_cover(
+    self,
+    title: str,
+    output_path: Union[str, Path],
+    size: Tuple[int, int] = (1080, 1920),
+    quality: int = 92
+) -> Path:
+        """
+        生成封面图（直接调用 cover_generator）
+        
+        Args:
+            title: 故事标题（可能包含标签）
+            output_path: 输出图片路径
+            size: 图片尺寸 (宽, 高)
+            quality: JPEG 压缩质量
+        
+        Returns:
+            输出文件路径
+        """
+        return self.cover_generator.generate(title, output_path, size, quality)
     def ms_to_srt_time(self, ms: int) -> str:
         """毫秒转SRT时间格式"""
         hours = ms // 3600000
@@ -289,7 +310,70 @@ class AudioMixer:
         seconds = (ms % 60000) // 1000
         milliseconds = ms % 1000
         return f"{hours:02}:{minutes:02}:{seconds:02},{milliseconds:03}"
-    
+    def generate_video(
+        self,
+        audio_path: Union[str, Path],
+        srt_path: Union[str, Path],
+        title: str,
+        output_path: Union[str, Path],
+        image_base_dir: Union[str, Path] = "assets/images",
+        min_images: int = 5,
+        max_images_per_sec: float = 0.12,
+        transition_sec: float = 1.2,
+        ken_burns_zoom: float = 0.0008,
+        resolution: tuple = (1080, 1920),
+        cleanup_temp: bool = True
+    ) -> Path:
+        """
+        根据音频、字幕和标题生成视频
+        
+        Args:
+            audio_path: 音频文件路径
+            srt_path: 字幕文件路径
+            title: 故事标题（用于提取场景标签）
+            output_path: 输出视频路径
+            image_base_dir: 图片基础目录
+            min_images: 最少图片数量
+            max_images_per_sec: 每秒最大图片数
+            transition_sec: 转场时长（秒）
+            ken_burns_zoom: Ken Burns 缩放幅度
+            resolution: 视频分辨率 (宽, 高)
+            cleanup_temp: 是否清理临时文件
+        
+        Returns:
+            输出视频路径
+        """
+        from .generate_video import create_video
+        
+        audio_path = Path(audio_path)
+        srt_path = Path(srt_path)
+        output_path = Path(output_path)
+        image_base_dir = Path(image_base_dir)
+        
+        # 确保输出目录存在
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        print(f"🎬 开始生成视频...")
+        print(f"  音频: {audio_path}")
+        print(f"  字幕: {srt_path}")
+        print(f"  标题: {title}")
+        print(f"  输出: {output_path}")
+        
+        # 调用视频生成函数
+        create_video(
+            audio_path=audio_path,
+            srt_path=srt_path,
+            image_base_dir=image_base_dir,
+            title=title,
+            output_path=output_path,
+            min_images=min_images,
+            max_images_per_sec=max_images_per_sec,
+            transition_sec=transition_sec,
+            ken_burns_zoom=ken_burns_zoom,
+            resolution=resolution
+        )
+        
+        return output_path
     def mix_audio(
         self,
         story_json_path: Union[str, Path],
@@ -297,8 +381,12 @@ class AudioMixer:
         task_dir: Union[str, Path],
         default_speaker: Optional[str] = None,
         bgm_volume_reduction: int = 10,
-        cleanup_after: bool = True
-    ) -> Tuple[Path, Path]:
+        cleanup_after: bool = True,
+        generate_cover: bool = True,
+        generate_video: bool = False,  
+        story_title: Optional[str] = None,
+        video_params: Optional[Dict] = None
+    ) -> Tuple[Path, Path, Optional[Path], Optional[Path]]:
         """
         生成最终音频并输出标准SRT字幕
         
@@ -340,6 +428,21 @@ class AudioMixer:
             with open(story_json_path, "r", encoding="utf-8") as f:
                 story_data = json.load(f)
             
+            # 创建封面目录
+            cover_dir = task_dir / "cover"
+            cover_dir.mkdir(parents=True, exist_ok=True)
+
+            # 获取故事标题（用于封面）
+            cover_path = None
+            if generate_cover:
+                title = story_title
+                if title is None:
+                    title = story_data.get("title", "未命名故事")
+                
+                cover_path = self.generate_cover(
+                    title=title,
+                    output_path=cover_dir / "cover.jpg"
+                )
             # 初始化
             final_audio = AudioSegment.silent(duration=0)
             bgm_audio = None
@@ -458,7 +561,42 @@ class AudioMixer:
             print(f"✅ 字幕文件已生成: {srt_file}")
             print(f"📊 统计: 共 {len(subtitles)} 条字幕, 总时长 {current_time/1000:.2f}秒")
             
-            return output_file, srt_file
+            # 在生成音频和字幕之后，return 之前添加
+            video_path = None
+            if generate_video:
+            
+                try:
+                    print(f"🎬 视频生成已启用，开始处理...")
+                    print(f"  音频文件: {output_file}")
+                    print(f"  字幕文件: {srt_file}")
+                    video_dir = task_dir / "video"
+                    video_dir.mkdir(parents=True, exist_ok=True)
+                    video_file = video_dir / "final_video.mp4"
+                    
+                    # 视频参数
+                    vparams = video_params or {}
+                    
+                    video_path = self.generate_video(
+                        audio_path=output_file,
+                        srt_path=srt_file,
+                        title=story_title or story_data.get("title", "未命名故事"),
+                        output_path=video_file,
+                        image_base_dir=vparams.get("image_base_dir", "assets/images"),
+                        min_images=vparams.get("min_images", 5),
+                        max_images_per_sec=vparams.get("max_images_per_sec", 0.12),
+                        transition_sec=vparams.get("transition_sec", 1.2),
+                        ken_burns_zoom=vparams.get("ken_burns_zoom", 0.0008),
+                        resolution=vparams.get("resolution", (1080, 1920)),
+                        cleanup_temp=vparams.get("cleanup_temp", True)
+                    )
+                    print(f"✅ 视频已生成: {video_path}")
+                except Exception as e:
+                    print(f"❌ 视频生成失败: {e}")
+                    import traceback
+                    traceback.print_exc()
+
+            return output_file, srt_file, cover_path, video_path
+            
             
         finally:
             # 清理任务临时文件
@@ -536,10 +674,19 @@ def main():
             ], f, ensure_ascii=False)
         
         # 执行任务
-        output_audio, output_srt = mixer.mix_audio(
+        output_audio, output_srt, cover_file, video_file = mixer.mix_audio(
             story_json_path="data/story.json",
             audio_plan_path="data/audio_plan.json",
-            task_dir="output/task_001"
+            task_dir="output/task_001",
+            generate_cover=True,        # 生成封面
+            generate_video=True,         # 生成视频 - 必须设置为True！
+            video_params={                # 视频参数
+                "min_images": 6,
+                "max_images_per_sec": 0.1,
+                "transition_sec": 1.2,
+                "ken_burns_zoom": 0.0007,
+                "resolution": (1080, 1920)
+            }
         )
         
         # 查看缓存统计
@@ -565,19 +712,34 @@ def manual_usage():
         mixer.mix_audio(
             story_json_path="data/story.json",
             audio_plan_path="data/audio_plan.json",
-            task_dir="output/task_002"
+            task_dir="output/task_002",
+            generate_cover=True,  # 生成封面
+            generate_video=True,  # 生成视频（关键！）
+            video_params={        # 视频参数
+                "min_images": 6,
+                "max_images_per_sec": 0.1,
+                "transition_sec": 1.2,
+                "ken_burns_zoom": 0.0007,
+                "resolution": (1080, 1920)
+            }
         )
     finally:
         # 手动清理
         mixer.cleanup()
 
 
-# 兼容旧代码的接口
 def mix_audio(story_json_path, audio_plan_path, task_dir, **kwargs):
     """兼容旧版本的函数调用"""
-    with AudioMixer(**kwargs) as mixer:
-        return mixer.mix_audio(story_json_path, audio_plan_path, task_dir)
-
+    # 使用默认参数创建 AudioMixer
+    with AudioMixer() as mixer:
+        # 把所有 kwargs 传递给 mix_audio 方法
+        return mixer.mix_audio(
+            story_json_path, 
+            audio_plan_path, 
+            task_dir, 
+            **kwargs
+        )
 
 if __name__ == "__main__":
     main()
+    manual_usage() 

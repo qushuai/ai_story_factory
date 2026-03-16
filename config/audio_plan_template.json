@@ -1,0 +1,38 @@
+[
+  {
+    "type": "sfx",
+    "file": "assets/sfx/ambient/ambient_07_background uno 06.mp3"
+  },
+  {
+    "type": "dialogue",
+    "duration": 5000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/heartbeat/heartbeat_01_Heartbeat.wav.mp3"
+  },
+  {
+    "type": "dialogue",
+    "duration": 4000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/door/door_01_Door creak.mp3"
+  },
+  {
+    "type": "dialogue",
+    "duration": 3000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/footstep/footstep_01_Retro-Styled Footsteps - Metal.mp3"
+  },
+  {
+    "type": "dialogue",
+    "duration": 3000
+  },
+  {
+    "type": "sfx",
+    "file": "assets/sfx/jump/jump_01_Jump scare.mp3"
+  }
+]

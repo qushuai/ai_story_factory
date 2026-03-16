@@ -153,10 +153,19 @@ def main():
 
     print("Mixing audio...")
 
-    final_audio, subtitle_file = mix_audio(
+    final_audio, subtitle_file, cover_file,video_file= mix_audio(
         story_path,
         audio_plan_path,
-        task_dir
+        task_dir,
+        generate_cover=True,        # 生成封面
+        generate_video=True,         # 生成视频
+        video_params={                # 视频参数
+            "min_images": 6,
+            "max_images_per_sec": 0.1,
+            "transition_sec": 1.2,
+            "ken_burns_zoom": 0.0007,
+            "resolution": (1080, 1920)
+        }
     )
 
     print("\nAudio generated:")
