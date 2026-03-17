@@ -1,0 +1,236 @@
+{
+  "download_time": "2026-03-17 08:30:20",
+  "total_downloaded": 30,
+  "target_sounds": 30,
+  "category_stats": {
+    "ambient": 5,
+    "wind": 3,
+    "rain": 3,
+    "water": 3,
+    "heartbeat": 4,
+    "monster": 4,
+    "whisper": 4,
+    "scream": 4,
+    "footstep": 0,
+    "door": 0,
+    "metal": 0,
+    "glass": 0,
+    "jump": 0,
+    "thunder": 0
+  },
+  "files": {
+    "ambient_1": {
+      "id": 58765,
+      "name": "basscapes_Ultralowend.wav",
+      "file": "assets/sfx/ambient/ambient_01_basscapes_Ultralowend.wav.mp3",
+      "category": "ambient",
+      "duration": 4.43574
+    },
+    "ambient_2": {
+      "id": 58761,
+      "name": "basscapes_Mirror.wav",
+      "file": "assets/sfx/ambient/ambient_02_basscapes_Mirror.wav.mp3",
+      "category": "ambient",
+      "duration": 2.94898
+    },
+    "ambient_3": {
+      "id": 840731,
+      "name": "AMBDsgn_An Abandoned Prison.Dungeon.Scary Ambience Only.No Zombies 1_EM",
+      "file": "assets/sfx/ambient/ambient_03_AMBDsgn_An Abandoned Prison.Du.mp3",
+      "category": "ambient",
+      "duration": 0.0
+    },
+    "ambient_4": {
+      "id": 343813,
+      "name": "rnd_moan8.ogg",
+      "file": "assets/sfx/ambient/ambient_04_rnd_moan8.ogg.mp3",
+      "category": "ambient",
+      "duration": 2.60063
+    },
+    "ambient_5": {
+      "id": 343811,
+      "name": "rnd_moan6.ogg",
+      "file": "assets/sfx/ambient/ambient_05_rnd_moan6.ogg.mp3",
+      "category": "ambient",
+      "duration": 2.68671
+    },
+    "wind_1": {
+      "id": 496433,
+      "name": "wind.mp3",
+      "file": "assets/sfx/wind/wind_01_wind.mp3.mp3",
+      "category": "wind",
+      "duration": 4.85984
+    },
+    "wind_2": {
+      "id": 676981,
+      "name": "Spinning - Medium/Slow Speed",
+      "file": "assets/sfx/wind/wind_02_Spinning - MediumSlow Speed.mp3",
+      "category": "wind",
+      "duration": 3.75
+    },
+    "wind_3": {
+      "id": 169318,
+      "name": "Radiator Beast",
+      "file": "assets/sfx/wind/wind_03_Radiator Beast.mp3",
+      "category": "wind",
+      "duration": 2.62354
+    },
+    "rain_1": {
+      "id": 35368,
+      "name": "thunder3_by_fresco.wav",
+      "file": "assets/sfx/rain/rain_01_thunder3_by_fresco.wav.mp3",
+      "category": "rain",
+      "duration": 4.64175
+    },
+    "rain_2": {
+      "id": 484852,
+      "name": "Thunder.",
+      "file": "assets/sfx/rain/rain_02_Thunder..mp3",
+      "category": "rain",
+      "duration": 1.82279
+    },
+    "rain_3": {
+      "id": 522643,
+      "name": "RainCarShortApproachPassL>R.31 16:06:2020.wav",
+      "file": "assets/sfx/rain/rain_03_RainCarShortApproachPassLR.31 .mp3",
+      "category": "rain",
+      "duration": 3.31615
+    },
+    "water_1": {
+      "id": 271334,
+      "name": "Water, Dripping, Slow, A.wav",
+      "file": "assets/sfx/water/water_01_Water Dripping Slow A.wav.mp3",
+      "category": "water",
+      "duration": 4.96327
+    },
+    "water_2": {
+      "id": 612596,
+      "name": "water dripping short 48000 Hz 24 bit Stereo.wav",
+      "file": "assets/sfx/water/water_02_water dripping short 48000 Hz .mp3",
+      "category": "water",
+      "duration": 2.32152
+    },
+    "water_3": {
+      "id": 5909,
+      "name": "drip_on_plastic002.wav",
+      "file": "assets/sfx/water/water_03_drip_on_plastic002.wav.mp3",
+      "category": "water",
+      "duration": 0.734187
+    },
+    "heartbeat_1": {
+      "id": 20682,
+      "name": "Heartbeat.wav",
+      "file": "assets/sfx/heartbeat/heartbeat_01_Heartbeat.wav.mp3",
+      "category": "heartbeat",
+      "duration": 3.75583
+    },
+    "heartbeat_2": {
+      "id": 365788,
+      "name": "Heartbeat.wav",
+      "file": "assets/sfx/heartbeat/heartbeat_02_Heartbeat.wav.mp3",
+      "category": "heartbeat",
+      "duration": 4.18083
+    },
+    "heartbeat_3": {
+      "id": 136723,
+      "name": "HEARTBEAT001",
+      "file": "assets/sfx/heartbeat/heartbeat_03_HEARTBEAT001.mp3",
+      "category": "heartbeat",
+      "duration": 1.01041
+    },
+    "heartbeat_4": {
+      "id": 656037,
+      "name": "heartbeat1.wav",
+      "file": "assets/sfx/heartbeat/heartbeat_04_heartbeat1.wav.mp3",
+      "category": "heartbeat",
+      "duration": 1.81986
+    },
+    "monster_1": {
+      "id": 432195,
+      "name": "Monster Growl",
+      "file": "assets/sfx/monster/monster_01_Monster Growl.mp3",
+      "category": "monster",
+      "duration": 2.62152
+    },
+    "monster_2": {
+      "id": 464941,
+      "name": "Monster growl 2",
+      "file": "assets/sfx/monster/monster_02_Monster growl 2.mp3",
+      "category": "monster",
+      "duration": 2.01506
+    },
+    "monster_3": {
+      "id": 432196,
+      "name": "Monster Growl Confused",
+      "file": "assets/sfx/monster/monster_03_Monster Growl Confused.mp3",
+      "category": "monster",
+      "duration": 2.6193
+    },
+    "monster_4": {
+      "id": 718009,
+      "name": "MonsterSynthesizedGrowl_04",
+      "file": "assets/sfx/monster/monster_04_MonsterSynthesizedGrowl_04.mp3",
+      "category": "monster",
+      "duration": 3.0
+    },
+    "whisper_1": {
+      "id": 570847,
+      "name": "Whisper4.wav",
+      "file": "assets/sfx/whisper/whisper_01_Whisper4.wav.mp3",
+      "category": "whisper",
+      "duration": 3.60723
+    },
+    "whisper_2": {
+      "id": 570850,
+      "name": "Whisper1.wav",
+      "file": "assets/sfx/whisper/whisper_02_Whisper1.wav.mp3",
+      "category": "whisper",
+      "duration": 3.12356
+    },
+    "whisper_3": {
+      "id": 234044,
+      "name": "Creepy Whispering",
+      "file": "assets/sfx/whisper/whisper_03_Creepy Whispering.mp3",
+      "category": "whisper",
+      "duration": 4.08671
+    },
+    "whisper_4": {
+      "id": 570849,
+      "name": "Whisper2.wav",
+      "file": "assets/sfx/whisper/whisper_04_Whisper2.wav.mp3",
+      "category": "whisper",
+      "duration": 3.266
+    },
+    "scream_1": {
+      "id": 837801,
+      "name": "Horror Scream 1",
+      "file": "assets/sfx/scream/scream_01_Horror Scream 1.mp3",
+      "category": "scream",
+      "duration": 2.1829
+    },
+    "scream_2": {
+      "id": 220291,
+      "name": "screaming_male_horror.mp3",
+      "file": "assets/sfx/scream/scream_02_screaming_male_horror.mp3.mp3",
+      "category": "scream",
+      "duration": 2.43133
+    },
+    "scream_3": {
+      "id": 220302,
+      "name": "screaming_woman_horror.mp3",
+      "file": "assets/sfx/scream/scream_03_screaming_woman_horror.mp3.mp3",
+      "category": "scream",
+      "duration": 2.07871
+    },
+    "scream_4": {
+      "id": 220301,
+      "name": "screaming_woman_horrorIII.mp3",
+      "file": "assets/sfx/scream/scream_04_screaming_woman_horrorIII.mp3.mp3",
+      "category": "scream",
+      "duration": 3.45831
+    }
+  },
+  "failed_searches": [
+    "horror ambient"
+  ]
+}
