@@ -249,9 +249,9 @@ class AudioMixer:
             "reference_id": actual_speaker,
             "format": "wav",
             "max_new_tokens": 1024,
-            "top_p": 0.3,              # 很低，严格采样
-            "temperature": 0.2,         # 很低，确定性高
-            "repetition_penalty": 1.8,  # 很高，避免重复
+            "top_p": 0.9,              # 很低，严格采样
+            "temperature": 0.5,         # 很低，确定性高
+            "repetition_penalty": 1.2,  # 很高，避免重复
             "seed": 42
         }
 

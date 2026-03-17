@@ -5,7 +5,7 @@ import re
 import subprocess
 import shutil
 from typing import Optional
-
+import os
 
 def extract_scene_tag(title: str) -> str:
     """
@@ -152,12 +152,13 @@ def create_video(
         with open(concat_file, 'w') as f:
             for seg in video_segments:
                 f.write(f"file '{seg.absolute()}'\n")
-        
+        # 获取字体文件的绝对路径
+       
         # ===== 修改字幕样式 - 更小、更靠下 =====
         # 使用 ASS 字幕样式（更精确的控制）
         subtitle_style = (
-            "FontName=Arial,"           # 字体
-            "FontSize=16,"               # 字体大小（进一步减小到18）
+            "FontName=NotoSansCJK-Regular,"           # 字体
+            "FontSize=14,"               # 字体大小（进一步减小到18）
             "PrimaryColour=&HFFFFFF&,"   # 白色
             "OutlineColour=&H000000&,"   # 黑色描边
             "BackColour=&H80000000&,"    # 半透明背景

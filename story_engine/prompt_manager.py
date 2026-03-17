@@ -20,7 +20,6 @@ class PromptManager:
 角色标签：
 
 [SPEAKER:male]
-[SPEAKER:ghost]
 [SPEAKER:female]
 旁白使用[SPEAKER:female]
 音效标签：
@@ -44,7 +43,8 @@ class PromptManager:
 6 使用 PAUSE 制造紧张节奏
 7 故事长度约 1-2分钟
 8 故事必须是 **原创场景**
-9 故事必须包含 12-20行对白
+9 故事必须包含 1-2行对白
+10 不要有标点符号
 禁止出现以下常见套路：
 
 - 老宅
@@ -65,6 +65,7 @@ class PromptManager:
 楼梯staircase
 镜子mirror
 午夜电梯midnight_elevator
+先 来个house 场景的
 
 故事必须 **直接开始正文**，不要解释规则。
 """
