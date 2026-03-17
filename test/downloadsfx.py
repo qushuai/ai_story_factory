@@ -1,6 +1,6 @@
 """
 auto_sfx_downloader.py
-自动从 Freesound 下载恐怖音效（增强版）
+自动从 Freesound 下载恐怖音效（稳定版）
 """
 
 import os
@@ -10,6 +10,11 @@ from pathlib import Path
 import json
 from typing import Dict, List, Optional
 import argparse
+import random
+import urllib3
+
+# 禁用SSL警告
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class AutoSFXDownloader:
     """自动恐怖音效下载器"""
@@ -26,82 +31,145 @@ class AutoSFXDownloader:
             self.api_key = input("请输入你的Freesound API密钥: ").strip()
         
         self.base_url = "https://freesound.org/apiv2"
+        
+        # 创建会话，禁用SSL验证
         self.session = requests.Session()
+        self.session.verify = False
         self.session.headers.update({"Authorization": f"Token {self.api_key}"})
         
-        # 恐怖音效搜索配置 - 每个分类多准备几个关键词
+        # 设置超时
+        self.timeout = 15
+        
+        # ========== 扩展后的恐怖音效分类（15类） ==========
         self.categories = {
+            # 环境氛围类
             "ambient": {
                 "keywords": [
                     "horror ambient", "creepy atmosphere", "scary background",
-                    "eerie ambiance", "haunted atmosphere", "dark ambiance"
+                    "eerie ambiance", "haunted atmosphere", "dark ambiance",
+                    "tension pad", "suspense drone"
                 ],
-                "description": "环境氛围音（风声、嗡鸣）",
-                "target": 2
+                "description": "环境氛围音（嗡鸣、恐怖背景）",
+                "target": 5
             },
+            "wind": {
+                "keywords": [
+                    "scary wind", "haunted wind", "eerie wind", "howling wind",
+                    "ghost wind", "wind howl", "night wind"
+                ],
+                "description": "风声（呼啸、阴森）",
+                "target": 3
+            },
+            "rain": {
+                "keywords": [
+                    "scary rain", "creepy rain", "rain thunder", "rain storm",
+                    "rain at night", "heavy rain", "rain and thunder"
+                ],
+                "description": "雨声（暴雨、雷雨）",
+                "target": 3
+            },
+            "water": {
+                "keywords": [
+                    "water drip", "water drop", "dripping water", "water splash",
+                    "water horror", "drip sound", "water torture"
+                ],
+                "description": "水声（滴水、水花）",
+                "target": 3
+            },
+            
+            # 生物与恐怖声
             "heartbeat": {
                 "keywords": [
                     "heartbeat scary", "fear heartbeat", "tension heartbeat",
-                    "pulse horror", "heart thump"
+                    "pulse horror", "heart thump", "fast heartbeat",
+                    "slow heartbeat", "anxiety heartbeat"
                 ],
-                "description": "心跳声",
-                "target": 1
-            },
-            "door": {
-                "keywords": [
-                    "door creak horror", "scary door", "creaking door",
-                    "haunted door", "door open creepy"
-                ],
-                "description": "门声",
-                "target": 1
-            },
-            "footstep": {
-                "keywords": [
-                    "footsteps horror", "scary footsteps", "creepy walk",
-                    "footsteps on wood", "ghost footsteps"
-                ],
-                "description": "脚步声",
-                "target": 1
-            },
-            "jump": {
-                "keywords": [
-                    "jump scare", "horror scream", "scary scream",
-                    "fear scream", "horror sting"
-                ],
-                "description": "惊吓音",
-                "target": 1
+                "description": "心跳声（紧张、恐惧）",
+                "target": 4
             },
             "monster": {
                 "keywords": [
-                    "monster growl", "demon voice", "evil laugh",
-                    "creature roar", "beast sound"
+                    "monster growl", "demon voice", "evil laugh", "creature roar",
+                    "beast sound", "demon growl", "monster breath"
                 ],
-                "description": "怪物音",
-                "target": 1
+                "description": "怪物音（咆哮、低吼）",
+                "target": 4
             },
             "whisper": {
                 "keywords": [
                     "ghost whisper", "scary whisper", "evil whisper",
-                    "demonic whisper", "creepy voice"
+                    "demonic whisper", "creepy voice", "dark whisper",
+                    "whisper horror", "spirit voice"
                 ],
-                "description": "低语声",
-                "target": 1
+                "description": "低语声（鬼语、恶魔低语）",
+                "target": 4
+            },
+            "scream": {
+                "keywords": [
+                    "horror scream", "scary scream", "fear scream",
+                    "woman scream", "man scream", "distant scream",
+                    "terrified scream", "sudden scream"
+                ],
+                "description": "尖叫声（人类尖叫）",
+                "target": 4
+            },
+            "footstep": {
+                "keywords": [
+                    "footsteps horror", "scary footsteps", "creepy walk",
+                    "footsteps on wood", "ghost footsteps", "slow footsteps",
+                    "footsteps approach", "heavy footsteps"
+                ],
+                "description": "脚步声（各种材质）",
+                "target": 4
+            },
+            
+            # 物体与场景声
+            "door": {
+                "keywords": [
+                    "door creak horror", "scary door", "creaking door",
+                    "haunted door", "door open creepy", "door slam",
+                    "wooden door creak", "old door"
+                ],
+                "description": "门声（吱呀、开关、敲击）",
+                "target": 4
             },
             "metal": {
                 "keywords": [
                     "scary metal", "creepy chain", "metal scrape",
-                    "rusty gate", "metal drag"
+                    "rusty gate", "metal drag", "metal clank",
+                    "chain rattle", "metal grind"
                 ],
-                "description": "金属音",
-                "target": 1
+                "description": "金属音（链条、摩擦）",
+                "target": 3
             },
-            "wind": {
+            "glass": {
                 "keywords": [
-                    "scary wind", "haunted wind", "eerie wind",
-                    "howling wind", "ghost wind"
+                    "glass break", "glass smash", "glass shatter",
+                    "broken glass", "glass crack", "window break",
+                    "shattering glass"
                 ],
-                "description": "风声",
-                "target": 1
+                "description": "玻璃声（破碎、裂纹）",
+                "target": 3
+            },
+            
+            # 超自然与惊吓
+            "jump": {
+                "keywords": [
+                    "jump scare", "horror sting", "scary sting",
+                    "fear sting", "horror hit", "jump sound",
+                    "scare chord", "sudden scare"
+                ],
+                "description": "惊吓音（Jump Scare）",
+                "target": 5
+            },
+            "thunder": {
+                "keywords": [
+                    "thunder horror", "thunder crash", "thunder rumble",
+                    "thunder storm", "lightning strike", "thunder clap",
+                    "distant thunder", "loud thunder"
+                ],
+                "description": "雷声（雷鸣、闪电）",
+                "target": 3
             }
         }
         
@@ -112,6 +180,7 @@ class AutoSFXDownloader:
         # 统计
         self.downloaded_count = 0
         self.results = {}
+        self.failed_keywords = []  # 记录失败的关键词
     
     def _create_directories(self):
         """创建音效目录"""
@@ -120,13 +189,8 @@ class AutoSFXDownloader:
             cat_path = self.sfx_dir / category
             cat_path.mkdir(parents=True, exist_ok=True)
             print(f"  ✅ {category}/")
-        
-        # 创建BGM目录
-        bgm_dir = Path("assets/bgm")
-        bgm_dir.mkdir(parents=True, exist_ok=True)
-        print(f"  ✅ bgm/")
     
-    def search_sounds(self, query: str, max_duration: float = 5.0, max_results: int = 5) -> List[Dict]:
+    def search_sounds(self, query: str, max_duration: float = 5.0, max_results: int = 8) -> List[Dict]:
         """
         搜索音效
         
@@ -146,13 +210,22 @@ class AutoSFXDownloader:
             response = self.session.get(
                 f"{self.base_url}/search/text/",
                 params=params,
-                timeout=10
+                timeout=self.timeout
             )
             response.raise_for_status()
             data = response.json()
             return data.get("results", [])
+        except requests.exceptions.Timeout:
+            print(f"    搜索超时，跳过")
+            self.failed_keywords.append(query)
+            return []
+        except requests.exceptions.SSLError:
+            print(f"    SSL错误，跳过")
+            self.failed_keywords.append(query)
+            return []
         except Exception as e:
-            print(f"    搜索失败 '{query}': {e}")
+            print(f"    搜索失败: {e}")
+            self.failed_keywords.append(query)
             return []
     
     def download_sound(self, sound_id: int, sound_name: str, category: str, index: int) -> Optional[Path]:
@@ -168,7 +241,7 @@ class AutoSFXDownloader:
         try:
             # 获取音效详情
             detail_url = f"{self.base_url}/sounds/{sound_id}/"
-            detail_response = self.session.get(detail_url, timeout=10)
+            detail_response = self.session.get(detail_url, timeout=self.timeout)
             detail_response.raise_for_status()
             sound_detail = detail_response.json()
             
@@ -186,7 +259,10 @@ class AutoSFXDownloader:
             if not safe_name:
                 safe_name = f"sound_{sound_id}"
             
-            filename = f"{category}_{index:02d}_{safe_name[:30]}.mp3"
+            # 限制文件名长度
+            safe_name = safe_name[:30]
+            
+            filename = f"{category}_{index:02d}_{safe_name}.mp3"
             filepath = self.sfx_dir / category / filename
             
             # 保存文件
@@ -200,46 +276,35 @@ class AutoSFXDownloader:
             print(f"    ❌ 下载失败: {e}")
             return None
     
-    def download_category(self, category: str, info: dict, max_retries: int = 3):
+    def download_category(self, category: str, info: dict):
         """
         下载单个分类的音效
         
         Args:
             category: 分类名
             info: 分类信息
-            max_retries: 最大重试次数
         """
         print(f"\n📂 分类: {category} - {info['description']}")
         print(f"   目标: {info['target']} 个音效")
         
         downloaded = 0
-        attempted_keywords = set()
+        keyword_index = 0
         
-        # 如果已经达到目标，直接返回
-        if downloaded >= info['target']:
-            return downloaded
-        
-        # 遍历所有关键词
-        for keyword in info['keywords']:
-            if downloaded >= info['target']:
-                break
-            
-            # 避免重复搜索相同的关键词
-            if keyword in attempted_keywords:
-                continue
-            attempted_keywords.add(keyword)
+        while downloaded < info['target'] and keyword_index < len(info['keywords']):
+            keyword = info['keywords'][keyword_index]
+            keyword_index += 1
             
             print(f"  🔍 搜索: '{keyword}'")
             
             # 搜索音效
-            sounds = self.search_sounds(keyword, max_duration=5.0, max_results=5)
+            sounds = self.search_sounds(keyword, max_duration=5.0, max_results=8)
             
             if not sounds:
                 print(f"    没有找到音效，尝试下一个关键词")
                 continue
             
             # 下载找到的音效
-            for idx, sound in enumerate(sounds):
+            for sound in sounds:
                 if downloaded >= info['target']:
                     break
                 
@@ -249,30 +314,23 @@ class AutoSFXDownloader:
                 
                 print(f"    🎵 找到: {sound_name[:40]}... ({duration:.1f}秒)")
                 
-                # 尝试下载，最多重试3次
-                for retry in range(max_retries):
-                    filepath = self.download_sound(
-                        sound_id=sound_id,
-                        sound_name=sound_name,
-                        category=category,
-                        index=downloaded + 1
-                    )
-                    
-                    if filepath:
-                        downloaded += 1
-                        self.downloaded_count += 1
-                        self.results[f"{category}_{downloaded}"] = {
-                            "id": sound_id,
-                            "name": sound_name,
-                            "file": str(filepath),
-                            "category": category,
-                            "duration": duration
-                        }
-                        break
-                    else:
-                        if retry < max_retries - 1:
-                            print(f"    重试 {retry + 1}/{max_retries}...")
-                            time.sleep(2)
+                filepath = self.download_sound(
+                    sound_id=sound_id,
+                    sound_name=sound_name,
+                    category=category,
+                    index=downloaded + 1
+                )
+                
+                if filepath:
+                    downloaded += 1
+                    self.downloaded_count += 1
+                    self.results[f"{category}_{downloaded}"] = {
+                        "id": sound_id,
+                        "name": sound_name,
+                        "file": str(filepath),
+                        "category": category,
+                        "duration": duration
+                    }
                 
                 # 避免请求过快
                 time.sleep(1)
@@ -280,146 +338,99 @@ class AutoSFXDownloader:
         print(f"  ✅ 分类完成: 下载 {downloaded}/{info['target']} 个")
         return downloaded
     
-    def download_all(self, total_sounds: int = 10):
+    def download_all(self, total_sounds: int = 30):
         """
-        下载所有音效，确保达到总数量
+        下载所有音效
         
         Args:
             total_sounds: 总共要下载的音效数量
         """
         print("\n" + "="*60)
-        print("🎧 自动恐怖音效下载器")
+        print("🎧 自动恐怖音效下载器（稳定版）")
         print("="*60)
         print(f"目标下载数量: {total_sounds} 个音效")
+        print(f"音效分类: {len(self.categories)} 类")
+        print("="*60)
+        print("⚠️  如果遇到网络错误会自动跳过")
         print("="*60)
         
-        # 先按分类目标下载
-        for category, info in self.categories.items():
-            if self.downloaded_count >= total_sounds:
-                break
-            self.download_category(category, info)
-        
-        # 如果还不够，继续从所有分类补足
-        if self.downloaded_count < total_sounds:
-            print(f"\n🔄 还需要 {total_sounds - self.downloaded_count} 个音效，继续搜索...")
-            
-            all_keywords = []
-            for info in self.categories.values():
-                all_keywords.extend(info['keywords'])
-            
-            # 随机打乱关键词顺序
-            import random
-            random.shuffle(all_keywords)
-            
-            for keyword in all_keywords:
+        try:
+            # 先按分类目标下载
+            for category, info in self.categories.items():
                 if self.downloaded_count >= total_sounds:
                     break
-                
-                print(f"\n🔍 补充分类搜索: '{keyword}'")
-                sounds = self.search_sounds(keyword, max_duration=5.0, max_results=3)
-                
-                for sound in sounds:
-                    if self.downloaded_count >= total_sounds:
-                        break
-                    
-                    # 随机选一个分类存放
-                    category = random.choice(list(self.categories.keys()))
-                    
-                    sound_id = sound["id"]
-                    sound_name = sound.get("name", f"sound_{sound_id}")
-                    duration = sound.get("duration", "?")
-                    
-                    print(f"    🎵 找到: {sound_name[:40]}... ({duration:.1f}秒)")
-                    
-                    filepath = self.download_sound(
-                        sound_id=sound_id,
-                        sound_name=sound_name,
-                        category=category,
-                        index=len([f for f in self.results.keys() if f.startswith(category)]) + 1
-                    )
-                    
-                    if filepath:
-                        self.downloaded_count += 1
-                        self.results[f"{category}_{self.downloaded_count}"] = {
-                            "id": sound_id,
-                            "name": sound_name,
-                            "file": str(filepath),
-                            "category": category,
-                            "duration": duration
-                        }
-                    
-                    time.sleep(1)
+                self.download_category(category, info)
+            
+            # 生成报告
+            self._generate_report()
+            
+            # 显示失败的搜索
+            if self.failed_keywords:
+                print(f"\n⚠️ 以下搜索失败（可重试）:")
+                for kw in self.failed_keywords[:5]:
+                    print(f"  - {kw}")
+            
+        except KeyboardInterrupt:
+            print("\n\n⚠️ 用户中断下载，保存已下载的文件...")
+            self._generate_report()
         
-        # 生成报告
-        self._generate_report()
         return self.results
     
     def _generate_report(self):
         """生成下载报告"""
         report_path = self.sfx_dir / "download_report.json"
         
-        # 按分类统计
+        # 统计每个分类的实际文件数
         category_stats = {}
+        total_files = 0
+        
         for category in self.categories.keys():
             cat_files = list(self.sfx_dir.glob(f"{category}/*.mp3"))
-            category_stats[category] = len(cat_files)
+            count = len(cat_files)
+            category_stats[category] = count
+            total_files += count
         
         report = {
             "download_time": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "total_downloaded": self.downloaded_count,
+            "total_downloaded": total_files,
+            "target_sounds": self.downloaded_count,
             "category_stats": category_stats,
-            "files": self.results
+            "files": self.results,
+            "failed_searches": self.failed_keywords[:10]
         }
         
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
         
         print("\n" + "="*60)
-        print(f"✅ 下载完成！共 {self.downloaded_count} 个音效")
+        print(f"✅ 下载完成！共 {total_files} 个音效")
         print(f"📄 报告已保存: {report_path}")
         print("\n📊 分类统计:")
         
-        for category, count in category_stats.items():
+        # 显示统计
+        for category, count in sorted(category_stats.items(), key=lambda x: x[1], reverse=True):
             if count > 0:
-                print(f"  {category}/: {count} 个文件")
+                bar = "█" * int(count * 2)
+                print(f"  {category:12}: {count:2d}个 {bar}")
     
     def generate_audio_plan(self):
         """生成音频计划模板"""
-        # 检查实际下载的文件
-        available_sfx = {}
-        for category in self.categories.keys():
-            files = list(self.sfx_dir.glob(f"{category}/*.mp3"))
-            if files:
-                available_sfx[category] = files[0].name  # 用第一个文件
-        
-        template = []
-        
-        # 按恐怖故事节奏生成模板
-        if "ambient" in available_sfx:
-            template.append({"type": "sfx", "file": f"assets/sfx/ambient/{available_sfx['ambient']}"})
-        
-        template.append({"type": "dialogue", "duration": 5000})
-        
-        if "heartbeat" in available_sfx:
-            template.append({"type": "sfx", "file": f"assets/sfx/heartbeat/{available_sfx['heartbeat']}"})
-        
-        template.append({"type": "dialogue", "duration": 4000})
-        
-        if "door" in available_sfx:
-            template.append({"type": "sfx", "file": f"assets/sfx/door/{available_sfx['door']}"})
-        
-        template.append({"type": "dialogue", "duration": 3000})
-        
-        if "footstep" in available_sfx:
-            template.append({"type": "sfx", "file": f"assets/sfx/footstep/{available_sfx['footstep']}"})
-        
-        template.append({"type": "dialogue", "duration": 3000})
-        
-        if "jump" in available_sfx:
-            template.append({"type": "sfx", "file": f"assets/sfx/jump/{available_sfx['jump']}"})
-        
         template_path = Path("config") / "audio_plan_template.json"
         template_path.parent.mkdir(exist_ok=True)
+        
+        # 基础模板
+        template = [
+            {"type": "bgm", "file": "assets/bgm/placeholder.mp3"},
+            {"type": "sfx", "file": "assets/sfx/ambient/ambient_01.mp3"},
+            {"type": "dialogue", "duration": 5000},
+            {"type": "sfx", "file": "assets/sfx/heartbeat/heartbeat_01.mp3"},
+            {"type": "dialogue", "duration": 4000},
+            {"type": "sfx", "file": "assets/sfx/door/door_01.mp3"},
+            {"type": "dialogue", "duration": 3000},
+            {"type": "sfx", "file": "assets/sfx/footstep/footstep_01.mp3"},
+            {"type": "dialogue", "duration": 3000},
+            {"type": "sfx", "file": "assets/sfx/jump/jump_01.mp3"}
+        ]
         
         with open(template_path, "w", encoding="utf-8") as f:
             json.dump(template, f, indent=2, ensure_ascii=False)
@@ -429,22 +440,23 @@ class AutoSFXDownloader:
 
 
 def quick_demo():
-    """快速演示：下载10个音效"""
-    print("🚀 快速下载模式：下载10个恐怖音效")
+    """快速演示：下载30个音效"""
+    print("🚀 快速下载模式：下载30个恐怖音效（15个分类）")
     
     # 使用您提供的API密钥
     downloader = AutoSFXDownloader(api_key="hHMqbjrS5LpwHe7npYjRaP61bamSX2nzph6pRVVp")
     
     # 下载音效
-    results = downloader.download_all(total_sounds=10)
+    results = downloader.download_all(total_sounds=30)
     
     # 生成模板
     downloader.generate_audio_plan()
     
     print("\n💡 使用提示:")
     print("1. 查看 assets/sfx/ 目录下的音效文件")
-    print("2. 运行 ls -la assets/sfx/*/ 查看所有下载的文件")
-    print("3. 在 audio_plan.json 中引用这些音效")
+    print("2. 运行 ls -la assets/sfx/*/ 查看所有文件")
+    print("3. 按 Ctrl+C 可以随时中断，已下载的文件会保留")
+    print("4. 重新运行会继续下载未完成的分类")
     
     return results
 

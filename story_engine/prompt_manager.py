@@ -24,10 +24,15 @@ class PromptManager:
 旁白使用[SPEAKER:female]
 音效标签：
 
-[SFX:door]
-[SFX:footstep]
-[SFX:heartbeat]
-[SFX:whisper]
+[SFX:ambient_01]
+[SFX:door_01]
+[SFX:heartbeat_01]
+[SFX:rain_01]
+[SFX:scream_01]
+[SFX:water_01]
+[SFX:whisper_01]
+[SFX:wind_01]
+
 
 停顿标签：
 
